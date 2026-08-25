@@ -1,0 +1,111 @@
+$date
+	Tue Aug 25 14:37:46 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 4 ! result [3:0] $end
+$var reg 4 " a [3:0] $end
+$var reg 4 # b [3:0] $end
+$var reg 3 $ op [2:0] $end
+$scope module uut $end
+$var wire 4 % a [3:0] $end
+$var wire 4 & b [3:0] $end
+$var wire 3 ' op [2:0] $end
+$var reg 4 ( result [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b101 (
+b0 '
+b10 &
+b11 %
+b0 $
+b10 #
+b11 "
+b101 !
+$end
+#11
+b11 !
+b11 (
+b1 $
+b1 '
+b1 #
+b1 &
+b100 "
+b100 %
+#22
+b1000 !
+b1000 (
+b10 $
+b10 '
+b1010 #
+b1010 &
+b1100 "
+b1100 %
+#33
+b111 !
+b111 (
+b11 $
+b11 '
+b11 #
+b11 &
+b101 "
+b101 %
+#44
+b101 !
+b101 (
+b100 $
+b100 '
+b1010 #
+b1010 &
+b1111 "
+b1111 %
+#55
+b1100 !
+b1100 (
+b101 $
+b101 '
+bx #
+bx &
+b11 "
+b11 %
+#66
+b1 !
+b1 (
+b110 $
+b110 '
+b101 #
+b101 &
+b111 "
+b111 %
+#77
+b111 $
+b111 '
+b1001 #
+b1001 &
+b1001 "
+b1001 %
+#88
+b0 !
+b0 (
+b0 $
+b0 '
+b1 #
+b1 &
+b1111 "
+b1111 %
+#99
+b1111 !
+b1111 (
+b1 $
+b1 '
+b0 "
+b0 %
+#110

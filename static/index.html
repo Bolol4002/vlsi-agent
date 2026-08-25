@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLSI Agent - Auto Testbench Generator</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/verilog/verilog.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg: #0d1117; --surface: #161b22; --border: #30363d;
+  --text: #c9d1d9; --text-dim: #8b949e; --accent: #58a6ff;
+  --green: #3fb950; --red: #f85149; --yellow: #d29922; --purple: #bc8cff;
+}
+body { font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+.app { display: grid; grid-template-rows: 56px 1fr; height: 100vh; }
+.header { display:flex; align-items:center; justify-content:space-between; padding:0 24px; background:var(--surface); border-bottom:1px solid var(--border); }
+.header h1 { font-size:18px; font-weight:600; }
+.header h1 span { color:var(--accent); }
+.header .status { font-size:12px; color:var(--text-dim); }
+.main { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:1px; background:var(--border); overflow:hidden; }
+.panel { background:var(--surface); display:flex; flex-direction:column; overflow:hidden; }
+.panel-header { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:var(--bg); border-bottom:1px solid var(--border); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-dim); }
+.panel-body { flex:1; overflow:auto; padding:0; }
+.editor-panel { grid-row: 1 / 3; }
+#code-editor { height: 100%; }
+.CodeMirror { height: 100% !important; font-size: 14px; }
+
+.btn { padding:8px 16px; border:1px solid var(--border); border-radius:6px; background:var(--surface); color:var(--text); cursor:pointer; font-family:inherit; font-size:12px; font-weight:600; transition:all 0.2s; }
+.btn:hover { border-color:var(--accent); color:var(--accent); }
+.btn-primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+.btn-primary:hover { background:#79c0ff; }
+.btn:disabled { opacity:0.5; cursor:not-allowed; }
+
+.output-content { padding:12px; font-size:13px; line-height:1.6; white-space:pre-wrap; word-break:break-all; }
+.pass { color:var(--green); }
+.fail { color:var(--red); }
+.info { color:var(--accent); }
+.warn { color:var(--yellow); }
+
+.tabs { display:flex; gap:0; }
+.tab { padding:6px 12px; font-size:11px; font-weight:600; cursor:pointer; border-bottom:2px solid transparent; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px; }
+.tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+.tab:hover { color:var(--text); }
+
+.waveform-container { width:100%; height:100%; overflow:auto; }
+.waveform-container svg { min-width:100%; }
+
+.summary-bar { display:flex; gap:16px; padding:8px 12px; background:var(--bg); border-top:1px solid var(--border); font-size:11px; }
+.summary-item { display:flex; align-items:center; gap:4px; }
+.dot { width:6px; height:6px; border-radius:50%; }
+.dot-green { background:var(--green); }
+.dot-red { background:var(--red); }
+.dot-blue { background:var(--accent); }
+
+.attempts { font-size:11px; color:var(--text-dim); }
+
+.spinner { display:inline-block; width:14px; height:14px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; margin-right:6px; vertical-align:middle; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.loading-overlay { position:absolute; inset:0; background:rgba(13,17,23,0.85); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; z-index:10; font-size:14px; color:var(--text-dim); }
+.loading-overlay .spinner { width:24px; height:24px; border-width:3px; }
+.hidden { display:none !important; }
+
+.ideal-table { padding:12px; font-size:12px; line-height:1.8; }
+.ideal-table table { width:100%; border-collapse:collapse; }
+.ideal-table th, .ideal-table td { padding:6px 10px; border:1px solid var(--border); text-align:left; }
+.ideal-table th { background:var(--bg); color:var(--accent); font-weight:600; }
+.ideal-table tr:hover { background:rgba(88,166,255,0.05); }
+
+.scroll-y { overflow-y:auto; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1><span>VLSI</span> Agent</h1>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span class="status" id="status">Ready</span>
+      <button class="btn btn-primary" id="run-btn" onclick="runSimulation()">Run</button>
+    </div>
+  </div>
+  <div class="main">
+    <!-- Editor Panel -->
+    <div class="panel editor-panel">
+      <div class="panel-header">
+        <span>Verilog / SystemVerilog</span>
+        <button class="btn" onclick="loadExample()" style="padding:4px 8px;font-size:10px;">Load Example</button>
+      </div>
+      <div class="panel-body" style="position:relative;">
+        <div id="loading" class="loading-overlay hidden">
+          <div class="spinner"></div>
+          <span id="loading-text">Generating testbench...</span>
+        </div>
+        <textarea id="code-editor"></textarea>
+      </div>
+    </div>
+
+    <!-- Output Panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="tabs">
+          <div class="tab active" data-tab="output" onclick="switchTab(this, 'output')">Output</div>
+          <div class="tab" data-tab="testbench" onclick="switchTab(this, 'testbench')">Testbench</div>
+          <div class="tab" data-tab="ideal" onclick="switchTab(this, 'ideal')">Ideal Values</div>
+        </div>
+        <span class="attempts" id="attempts-display"></span>
+      </div>
+      <div class="panel-body scroll-y">
+        <div id="tab-output" class="tab-content">
+          <div class="output-content" id="output-text">
+<span style="color:var(--text-dim)">// Paste your Verilog code in the editor and click Run.
+// The agent will auto-generate a testbench, simulate,
+// and fix any failing test cases automatically.</span>
+          </div>
+        </div>
+        <div id="tab-testbench" class="tab-content hidden">
+          <div class="output-content" id="testbench-text" style="color:var(--text-dim)">// Testbench will appear here after generation</div>
+        </div>
+        <div id="tab-ideal" class="tab-content hidden">
+          <div class="ideal-table" id="ideal-text">// Ideal values will appear here</div>
+        </div>
+      </div>
+      <div class="summary-bar" id="summary-bar" style="display:none;">
+        <div class="summary-item"><div class="dot dot-green"></div> <span id="sum-pass">0</span> Passed</div>
+        <div class="summary-item"><div class="dot dot-red"></div> <span id="sum-fail">0</span> Failed</div>
+        <div class="summary-item"><div class="dot dot-blue"></div> <span id="sum-total">0</span> Total</div>
+      </div>
+    </div>
+
+    <!-- Waveform Panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>Waveform</span>
+        <button class="btn" id="download-vcd-btn" onclick="downloadVCD()" style="padding:4px 8px;font-size:10px;">Download VCD</button>
+      </div>
+      <div class="panel-body">
+        <div class="waveform-container" id="waveform-view">
+          <div style="padding:24px;color:var(--text-dim);text-align:center;">// Waveforms will render here after simulation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+  mode: 'verilog',
+  theme: 'dracula',
+  lineNumbers: true,
+  indentUnit: 2,
+  tabSize: 2,
+  lineWrapping: true,
+  matchBrackets: true,
+});
+
+const EXAMPLE_CODE = `module alu (
+    input [3:0] a, b,
+    input [2:0] op,
+    output reg [3:0] result
+);
+
+    always @(*) begin
+        case (op)
+            3'b000: result = a + b;
+            3'b001: result = a - b;
+            3'b010: result = a & b;
+            3'b011: result = a | b;
+            3'b100: result = a ^ b;
+            3'b101: result = ~a;
+            3'b110: result = (a > b) ? 4'b0001 : 4'b0000;
+            3'b111: result = (a == b) ? 4'b0001 : 4'b0000;
+            default: result = 4'b0000;
+        endcase
+    end
+
+endmodule`;
+
+editor.setValue(EXAMPLE_CODE);
+
+let currentRunId = null;
+let lastVcdAvailable = false;
+
+function loadExample() {
+  editor.setValue(EXAMPLE_CODE);
+  editor.clearHistory();
+}
+
+function switchTab(el, tabName) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+  document.getElementById('tab-' + tabName).classList.remove('hidden');
+}
+
+function setLoading(on, text) {
+  const el = document.getElementById('loading');
+  const txt = document.getElementById('loading-text');
+  const btn = document.getElementById('run-btn');
+  if (on) {
+    el.classList.remove('hidden');
+    txt.textContent = text || 'Processing...';
+    btn.disabled = true;
+    btn.textContent = 'Running...';
+    document.getElementById('status').textContent = 'Running...';
+  } else {
+    el.classList.add('hidden');
+    btn.disabled = false;
+    btn.textContent = 'Run';
+    document.getElementById('status').textContent = 'Ready';
+  }
+}
+
+function formatOutput(logs) {
+  let html = '';
+  for (const log of logs) {
+    html += `<span class="info">=== Attempt ${log.attempt} ===</span>\n`;
+    if (log.compile_error) {
+      html += `<span class="fail">COMPILE ERROR:</span>\n`;
+      html += `<span class="fail">${escHtml(log.stderr || log.stdout)}</span>\n\n`;
+    } else {
+      if (log.stdout) {
+        const lines = log.stdout.split('\n');
+        for (const line of lines) {
+          if (line.includes('PASS')) html += `<span class="pass">${escHtml(line)}</span>\n`;
+          else if (line.includes('FAIL')) html += `<span class="fail">${escHtml(line)}</span>\n`;
+          else html += escHtml(line) + '\n';
+        }
+      }
+      if (log.stderr) {
+        html += `<span class="warn">${escHtml(log.stderr)}</span>\n`;
+      }
+    }
+    if (log.fix) {
+      html += `<span class="warn">Agent fix: ${escHtml(log.fix.explanation || '')}</span>\n`;
+    }
+    html += '\n';
+  }
+  return html;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderWaveform(data) {
+  if (!data || !data.signals) {
+    document.getElementById('waveform-view').innerHTML = '<div style="padding:24px;color:var(--text-dim);text-align:center;">// No waveform data</div>';
+    return;
+  }
+
+  const signals = data.signals;
+  const signalNames = Object.keys(signals).filter(n => n !== '');
+  if (signalNames.length === 0) {
+    document.getElementById('waveform-view').innerHTML = '<div style="padding:24px;color:var(--text-dim);text-align:center;">// No signals in waveform</div>';
+    return;
+  }
+
+  const timeScale = 20;
+  const sigHeight = 40;
+  const labelWidth = 120;
+  const totalTime = Math.max(...data.timeline, 100);
+  const svgWidth = labelWidth + (totalTime / 10) * timeScale + 100;
+  const svgHeight = signalNames.length * sigHeight + 40;
+
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" style="background:#0d1117;font-family:monospace;">`;
+
+  // Time axis
+  for (let t = 0; t <= totalTime; t += Math.max(10, Math.pow(10, Math.floor(Math.log10(totalTime/5))))) {
+    const x = labelWidth + (t / 10) * timeScale;
+    svg += `<text x="${x}" y="14" fill="#8b949e" font-size="10" text-anchor="middle">${t}ns</text>`;
+    svg += `<line x1="${x}" y1="18" x2="${x}" y2="${svgHeight}" stroke="#21262d" stroke-width="1"/>`;
+  }
+
+  signalNames.forEach((sigName, idx) => {
+    const sig = signals[sigName];
+    const yBase = 30 + idx * sigHeight;
+    const yTop = yBase + 5;
+    const yBot = yBase + sigHeight - 10;
+
+    svg += `<text x="${labelWidth - 8}" y="${yBase + 20}" fill="#c9d1d9" font-size="11" text-anchor="end">${escHtml(sigName)}</text>`;
+    svg += `<line x1="${labelWidth}" y1="${yBase + sigHeight/2}" x2="${svgWidth}" y2="${yBase + sigHeight/2}" stroke="#21262d" stroke-width="1"/>`;
+
+    const values = sig.values || [];
+    if (values.length === 0) return;
+
+    let path = '';
+    for (let i = 0; i < values.length; i++) {
+      const x = labelWidth + (values[i].time / 10) * timeScale;
+      const val = values[i].value;
+      const isHigh = val === '1' || val === 'x' || val === 'X';
+      const y = isHigh ? yTop : yBot;
+
+      if (i === 0) {
+        path += `M ${x} ${yBot} L ${x} ${y}`;
+      } else {
+        const prevVal = values[i-1].value;
+        const prevIsHigh = prevVal === '1' || prevVal === 'x' || prevVal === 'X';
+        const prevY = prevIsHigh ? yTop : yBot;
+        path += ` L ${x} ${prevY} L ${x} ${y}`;
+      }
+    }
+    if (values.length > 0) {
+      const lastX = labelWidth + (values[values.length-1].time / 10) * timeScale;
+      const lastVal = values[values.length-1].value;
+      const lastY = (lastVal === '1' || lastVal === 'x' || lastVal === 'X') ? yTop : yBot;
+      path += ` L ${Math.min(lastX + 30, svgWidth)} ${lastY}`;
+    }
+
+    svg += `<path d="${path}" fill="none" stroke="#58a6ff" stroke-width="2"/>`;
+
+    values.forEach(v => {
+      const x = labelWidth + (v.time / 10) * timeScale;
+      const displayVal = v.value === 'x' ? 'X' : v.value === 'z' ? 'Z' : v.value;
+      const y = (v.value === '1' || v.value === 'x' || v.value === 'X') ? yTop - 12 : yBot + 14;
+      svg += `<text x="${x+3}" y="${y}" fill="#8b949e" font-size="9">${displayVal}</text>`;
+    });
+  });
+
+  svg += '</svg>';
+  document.getElementById('waveform-view').innerHTML = svg;
+}
+
+function renderIdealValues(text) {
+  if (!text) {
+    document.getElementById('ideal-text').innerHTML = '<span style="color:var(--text-dim)">// No ideal values generated</span>';
+    return;
+  }
+  const lines = text.split('\n');
+  let html = '<table>';
+  let headerDone = false;
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('---')) continue;
+    const cells = trimmed.split('|').map(c => c.trim()).filter(c => c);
+    if (cells.length > 0) {
+      if (!headerDone) {
+        html += '<tr>' + cells.map(c => `<th>${escHtml(c)}</th>`).join('') + '</tr>';
+        headerDone = true;
+      } else {
+        html += '<tr>' + cells.map(c => `<td>${escHtml(c)}</td>`).join('') + '</tr>';
+      }
+    }
+  }
+  html += '</table>';
+  document.getElementById('ideal-text').innerHTML = html;
+}
+
+function downloadVCD() {
+  if (!currentRunId) return;
+  window.open(`/api/waveform/${currentRunId}`, '_blank');
+}
+
+async function runSimulation() {
+  const code = editor.getValue().trim();
+  if (!code) { alert('Please enter Verilog code'); return; }
+
+  setLoading(true, 'Generating testbench...');
+  document.getElementById('summary-bar').style.display = 'none';
+  document.getElementById('output-text').innerHTML = '<span class="info">Starting agent...\n</span>';
+
+  const attempts = ['Generating testbench...', 'Compiling...', 'Running simulation...', 'Analyzing results...', 'Fixing issues (if any)...'];
+  let attemptIdx = 0;
+  const interval = setInterval(() => {
+    if (attemptIdx < attempts.length - 1) {
+      attemptIdx++;
+      document.getElementById('loading-text').textContent = attempts[attemptIdx];
+    }
+  }, 4000);
+
+  try {
+    const resp = await fetch('/api/simulate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ verilog_code: code, mode: 'auto' }),
+    });
+
+    clearInterval(interval);
+
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.detail || 'Simulation failed');
+    }
+
+    const result = await resp.json();
+    currentRunId = result.run_id;
+    lastVcdAvailable = result.vcd_available;
+
+    document.getElementById('output-text').innerHTML = formatOutput(result.logs);
+    document.getElementById('testbench-text').innerHTML = `<pre style="color:var(--text)">${escHtml(result.testbench || '')}</pre>`;
+    document.getElementById('attempts-display').textContent = `${result.attempts} attempt${result.attempts > 1 ? 's' : ''}`;
+
+    if (result.test_summary) {
+      document.getElementById('sum-pass').textContent = result.test_summary.passed;
+      document.getElementById('sum-fail').textContent = result.test_summary.failed;
+      document.getElementById('sum-total').textContent = result.test_summary.total;
+      document.getElementById('summary-bar').style.display = 'flex';
+    }
+
+    renderIdealValues(result.ideal_values);
+
+    if (result.waveform_data) {
+      renderWaveform(result.waveform_data);
+    }
+
+    if (result.success) {
+      document.getElementById('status').innerHTML = '<span style="color:var(--green)">All tests passed!</span>';
+    } else {
+      document.getElementById('status').innerHTML = '<span style="color:var(--red)">Some tests still failing</span>';
+    }
+
+  } catch (err) {
+    clearInterval(interval);
+    document.getElementById('output-text').innerHTML = `<span class="fail">Error: ${escHtml(err.message)}</span>`;
+    document.getElementById('status').textContent = 'Error';
+  } finally {
+    setLoading(false);
+  }
+}
+
+editor.setSize(null, '100%');
+</script>
+</body>
+</html>
