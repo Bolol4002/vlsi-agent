@@ -1,0 +1,170 @@
+$date
+	Wed Aug 26 20:04:05 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb $end
+$var wire 4 ! result [3:0] $end
+$var reg 4 " a [3:0] $end
+$var reg 4 # b [3:0] $end
+$var reg 3 $ op [2:0] $end
+$var integer 32 % fail_cnt [31:0] $end
+$var integer 32 & pass_cnt [31:0] $end
+$scope module dut $end
+$var wire 4 ' a [3:0] $end
+$var wire 4 ( b [3:0] $end
+$var wire 3 ) op [2:0] $end
+$var reg 4 * result [3:0] $end
+$upscope $end
+$scope task check $end
+$var reg 4 + expected [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx +
+b1000 *
+b0 )
+b101 (
+b11 '
+b0 &
+b0 %
+b0 $
+b101 #
+b11 "
+b1000 !
+$end
+#1000
+b1000 +
+#2000
+b1010 !
+b1010 *
+b1 #
+b1 (
+b1001 "
+b1001 '
+b1 &
+#3000
+b1010 +
+#4000
+b101 !
+b101 *
+b1 $
+b1 )
+b10 #
+b10 (
+b111 "
+b111 '
+b10 &
+#5000
+b101 +
+#6000
+b1111 !
+b1111 *
+b1 #
+b1 (
+b0 "
+b0 '
+b11 &
+#7000
+b1111 +
+#8000
+b1000 !
+b1000 *
+b10 $
+b10 )
+b1100 #
+b1100 (
+b1010 "
+b1010 '
+b100 &
+#9000
+b1000 +
+#10000
+b111 !
+b111 *
+b11 $
+b11 )
+b11 #
+b11 (
+b101 "
+b101 '
+b101 &
+#11000
+b111 +
+#12000
+b101 !
+b101 *
+b100 $
+b100 )
+b1010 #
+b1010 (
+b1111 "
+b1111 '
+b110 &
+#13000
+b101 +
+#14000
+b1100 !
+b1100 *
+b101 $
+b101 )
+bx #
+bx (
+b11 "
+b11 '
+b111 &
+#15000
+b1100 +
+#16000
+b1 !
+b1 *
+b110 $
+b110 )
+b100 #
+b100 (
+b1001 "
+b1001 '
+b1000 &
+#17000
+b1 +
+#18000
+b0 !
+b0 *
+b111 #
+b111 (
+b11 "
+b11 '
+b1001 &
+#19000
+b0 +
+#20000
+b1 !
+b1 *
+b111 $
+b111 )
+b101 #
+b101 (
+b101 "
+b101 '
+b1010 &
+#21000
+b1 +
+#22000
+b0 !
+b0 *
+b110 #
+b110 (
+b10 "
+b10 '
+b1011 &
+#23000
+b0 +
+#24000
+b1100 &
+#34000
