@@ -109,3 +109,7 @@ requirements.txt       # Python dependencies
 .env                   # API keys (not committed)
 simulations/           # Per-run artifacts (design.v, tb.v, wave.vcd)
 ```
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 37b75c5 (some)
