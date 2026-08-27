@@ -12,6 +12,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import httpx
 from dotenv import load_dotenv
+<<<<<<< HEAD
+=======
+
+load_dotenv(Path(__file__).parent / ".env")
+>>>>>>> cde7631 (aomw)
 
 app = FastAPI(title="VLSI Agent")
 
@@ -25,9 +30,13 @@ app.add_middleware(
 SIM_DIR = Path(__file__).parent / "simulations"
 SIM_DIR.mkdir(exist_ok=True)
 
+<<<<<<< HEAD
 load_dotenv(Path(__file__).parent / ".env")
 
 LLM_API_KEY = os.environ.get("GROQ_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
+=======
+LLM_API_KEY = os.environ.get("GROQ_API_KEY")
+>>>>>>> cde7631 (aomw)
 LLM_MODEL = os.environ.get("LLM_MODEL", "openai/gpt-oss-120b")
 LLM_BASE_URL = os.environ.get("LLM_BASE_URL", "https://api.groq.com/openai/v1")
 
@@ -126,6 +135,7 @@ def parse_vcd(vcd_path: str) -> dict:
     return {"signals": signals, "timeline": timeline}
 
 
+<<<<<<< HEAD
 async def call_llm(
     messages: list[dict], temperature: float = 0.3, max_tokens: int = 1200
 ) -> str:
@@ -133,6 +143,13 @@ async def call_llm(
         raise HTTPException(
             status_code=500,
             detail="GROQ_API_KEY not set. Add it to the .env file.",
+=======
+async def call_llm(messages: list[dict], temperature: float = 0.3) -> str:
+    if not LLM_API_KEY:
+        raise HTTPException(
+            status_code=500,
+            detail="GROQ_API_KEY not set. Add it to the .env file."
+>>>>>>> cde7631 (aomw)
         )
 
     async with httpx.AsyncClient(timeout=120) as client:
