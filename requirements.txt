@@ -2,8 +2,4 @@ fastapi
 httpx
 pydantic
 python-dotenv
-<<<<<<< HEAD
 uvicorn
-=======
-uvicorn
->>>>>>> cde7631 (aomw)

@@ -1,0 +1,436 @@
+[
+  {
+    "model": "glm-5.2",
+    "code": 400,
+    "status": "\u274c 400",
+    "latency_s": 0.63,
+    "response": "\u6a21\u578b glm-5.2 \u7684\u4ef7\u683c\u5c1a\u672a\u7531\u7ba1\u7406\u5458\u914d\u7f6e\uff0c\u6682\u65f6\u65e0\u6cd5\u4f7f\u7528\uff0c\u8bf7\u8054\u7cfb\u7ad9\u70b9\u7ba1\u7406\u5458\u5f00\u542f\u8be5\u6a21\u578b\uff1bModel glm-5.2 has not been priced by the administrator yet. Please contact the site administrator to enable this model. (request id: 20260827134240602934900"
+  },
+  {
+    "model": "glm-5",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.64,
+    "response": "No available channel for model glm-5 under group default (distributor) (request id: 202608271342441677096618268d9d68ddnbIux)"
+  },
+  {
+    "model": "glm-5-turbo",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.69,
+    "response": "No available channel for model glm-5-turbo under group default (distributor) (request id: 202608271342477848562198268d9d6wUaEAmJl)"
+  },
+  {
+    "model": "glm-4",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.62,
+    "response": "No available channel for model glm-4 under group default (distributor) (request id: 202608271342513591545588268d9d6qpXcQ1fu)"
+  },
+  {
+    "model": "glm-4-plus",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.7,
+    "response": "No available channel for model glm-4-plus under group default (distributor) (request id: 202608271342549679529928268d9d6xn5xb1y7)"
+  },
+  {
+    "model": "glm-4-flash",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.66,
+    "response": "No available channel for model glm-4-flash under group default (distributor) (request id: 202608271342585675021828268d9d6NPiRFIOy)"
+  },
+  {
+    "model": "glm-4-flashx",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.62,
+    "response": "No available channel for model glm-4-flashx under group default (distributor) (request id: 202608271343021462782818268d9d6Qpl6EenT)"
+  },
+  {
+    "model": "glm-4-air",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.69,
+    "response": "No available channel for model glm-4-air under group default (distributor) (request id: 202608271343057602356488268d9d6T9WvUB35)"
+  },
+  {
+    "model": "glm-4-airx",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.69,
+    "response": ""
+  },
+  {
+    "model": "glm-4-long",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.68,
+    "response": ""
+  },
+  {
+    "model": "glm-4-9b",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.65,
+    "response": ""
+  },
+  {
+    "model": "glm-4v",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.62,
+    "response": ""
+  },
+  {
+    "model": "glm-4v-plus",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.69,
+    "response": ""
+  },
+  {
+    "model": "glm-4v-flash",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.7,
+    "response": ""
+  },
+  {
+    "model": "glm-4v-9b",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.69,
+    "response": ""
+  },
+  {
+    "model": "glm-z1-air",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.65,
+    "response": ""
+  },
+  {
+    "model": "glm-z1-airx",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.62,
+    "response": ""
+  },
+  {
+    "model": "glm-z1-flash",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.65,
+    "response": "No available channel for model glm-z1-flash under group default (distributor) (request id: 202608271343418090403558268d9d6Xfimo3uk)"
+  },
+  {
+    "model": "deepseek-chat",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.65,
+    "response": "No available channel for model deepseek-chat under group default (distributor) (request id: 202608271343453931864318268d9d65HPpUDOu)"
+  },
+  {
+    "model": "deepseek-coder",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.62,
+    "response": "No available channel for model deepseek-coder under group default (distributor) (request id: 202608271343489807498848268d9d6vRDAEgVn)"
+  },
+  {
+    "model": "deepseek-reasoner",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.56,
+    "response": "No available channel for model deepseek-reasoner under group default (distributor) (request id: 202608271343524814972478268d9d6Ta91LLO9)"
+  },
+  {
+    "model": "deepseek-v3",
+    "code": 400,
+    "status": "\u274c 400",
+    "latency_s": 0.6,
+    "response": "\u6a21\u578b deepseek-v3 \u7684\u4ef7\u683c\u5c1a\u672a\u7531\u7ba1\u7406\u5458\u914d\u7f6e\uff0c\u6682\u65f6\u65e0\u6cd5\u4f7f\u7528\uff0c\u8bf7\u8054\u7cfb\u7ad9\u70b9\u7ba1\u7406\u5458\u5f00\u542f\u8be5\u6a21\u578b\uff1bModel deepseek-v3 has not been priced by the administrator yet. Please contact the site administrator to enable this model. (request id: 202608271343560"
+  },
+  {
+    "model": "deepseek-v3.1",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.7,
+    "response": "No available channel for model deepseek-v3.1 under group default (distributor) (request id: 202608271343596167412268268d9d6dw3qcHuV)"
+  },
+  {
+    "model": "deepseek-v4",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.63,
+    "response": "No available channel for model deepseek-v4 under group default (distributor) (request id: 202608271344032110404368268d9d6rMir8SQa)"
+  },
+  {
+    "model": "deepseek-v4-flash",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.63,
+    "response": "No available channel for model deepseek-v4-flash under group default (distributor) (request id: 202608271344068007079218268d9d6xN217OWe)"
+  },
+  {
+    "model": "deepseek-r1",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.61,
+    "response": ""
+  },
+  {
+    "model": "gpt-4o",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.62,
+    "response": ""
+  },
+  {
+    "model": "gpt-4o-mini",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.72,
+    "response": ""
+  },
+  {
+    "model": "gpt-4-turbo",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.65,
+    "response": ""
+  },
+  {
+    "model": "gpt-4",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.61,
+    "response": ""
+  },
+  {
+    "model": "gpt-5",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.67,
+    "response": ""
+  },
+  {
+    "model": "gpt-5-mini",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.65,
+    "response": ""
+  },
+  {
+    "model": "o1",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.7,
+    "response": ""
+  },
+  {
+    "model": "o1-mini",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.61,
+    "response": ""
+  },
+  {
+    "model": "o3",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.64,
+    "response": "No available channel for model o3 under group default (distributor) (request id: 202608271344426321193728268d9d6QTAksq4l)"
+  },
+  {
+    "model": "o3-mini",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.68,
+    "response": "No available channel for model o3-mini under group default (distributor) (request id: 202608271344462466139518268d9d63qnpDc3C)"
+  },
+  {
+    "model": "o4-mini",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.59,
+    "response": "No available channel for model o4-mini under group default (distributor) (request id: 202608271344498210402808268d9d6029QzRKm)"
+  },
+  {
+    "model": "claude-3.5-sonnet",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.63,
+    "response": "No available channel for model claude-3.5-sonnet under group default (distributor) (request id: 202608271344533759787358268d9d6Yt0eodM4)"
+  },
+  {
+    "model": "claude-3.5-haiku",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.61,
+    "response": "No available channel for model claude-3.5-haiku under group default (distributor) (request id: 202608271344569262233838268d9d6e2SllVfS)"
+  },
+  {
+    "model": "claude-3-haiku",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.62,
+    "response": "No available channel for model claude-3-haiku under group default (distributor) (request id: 202608271345004823558198268d9d62501vHxV)"
+  },
+  {
+    "model": "claude-4-sonnet",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.62,
+    "response": "No available channel for model claude-4-sonnet under group default (distributor) (request id: 202608271345040462861268268d9d6x6HeYFSB)"
+  },
+  {
+    "model": "claude-4.5-sonnet",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.64,
+    "response": "No available channel for model claude-4.5-sonnet under group default (distributor) (request id: 202608271345075872194308268d9d6l16sh30X)"
+  },
+  {
+    "model": "claude-4.6-sonnet",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.68,
+    "response": ""
+  },
+  {
+    "model": "gemini-2.0-flash",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.69,
+    "response": ""
+  },
+  {
+    "model": "gemini-2.5-pro",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.64,
+    "response": ""
+  },
+  {
+    "model": "gemini-2.5-flash",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.67,
+    "response": ""
+  },
+  {
+    "model": "qwen-turbo",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.68,
+    "response": ""
+  },
+  {
+    "model": "qwen-plus",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.68,
+    "response": ""
+  },
+  {
+    "model": "qwen-max",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.65,
+    "response": ""
+  },
+  {
+    "model": "qwen2.5-72b-instruct",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.67,
+    "response": ""
+  },
+  {
+    "model": "qwq-32b",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.7,
+    "response": ""
+  },
+  {
+    "model": "qwen3-235b-a22b",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.01,
+    "response": "No available channel for model qwen3-235b-a22b under group default (distributor) (request id: 202608271345436279813598268d9d6aGg1e9UW)"
+  },
+  {
+    "model": "llama-3.1-8b",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.66,
+    "response": "No available channel for model llama-3.1-8b under group default (distributor) (request id: 202608271345472203068418268d9d6TguQdPd7)"
+  },
+  {
+    "model": "llama-3.1-70b",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.57,
+    "response": "No available channel for model llama-3.1-70b under group default (distributor) (request id: 202608271345507560468568268d9d6Qytfi116)"
+  },
+  {
+    "model": "llama-3.1-405b",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.67,
+    "response": "No available channel for model llama-3.1-405b under group default (distributor) (request id: 202608271345543593166598268d9d6CVppPw5T)"
+  },
+  {
+    "model": "llama-4-scout",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.64,
+    "response": "No available channel for model llama-4-scout under group default (distributor) (request id: 202608271345579543423688268d9d6G2aTTTMc)"
+  },
+  {
+    "model": "llama-4-maverick",
+    "code": 400,
+    "status": "\u274c 400",
+    "latency_s": 0.69,
+    "response": "\u6a21\u578b llama-4-maverick \u7684\u4ef7\u683c\u5c1a\u672a\u7531\u7ba1\u7406\u5458\u914d\u7f6e\uff0c\u6682\u65f6\u65e0\u6cd5\u4f7f\u7528\uff0c\u8bf7\u8054\u7cfb\u7ad9\u70b9\u7ba1\u7406\u5458\u5f00\u542f\u8be5\u6a21\u578b\uff1bModel llama-4-maverick has not been priced by the administrator yet. Please contact the site administrator to enable this model. (request id: 20260"
+  },
+  {
+    "model": "mistral-large",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.7,
+    "response": "No available channel for model mistral-large under group default (distributor) (request id: 202608271346052080891708268d9d67j934jNs)"
+  },
+  {
+    "model": "kimi",
+    "code": 503,
+    "status": "\u274c 503",
+    "latency_s": 0.63,
+    "response": "No available channel for model kimi under group default (distributor) (request id: 202608271346088106788738268d9d6hgKS6gam)"
+  },
+  {
+    "model": "kimi-k2",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.64,
+    "response": ""
+  },
+  {
+    "model": "moonshot-v1-auto",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.65,
+    "response": ""
+  },
+  {
+    "model": "codestral",
+    "code": 429,
+    "status": "\u274c 429",
+    "latency_s": 0.6,
+    "response": ""
+  }
+]

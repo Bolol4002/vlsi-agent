@@ -1,13 +1,8 @@
 .env
 __pycache__/
-<<<<<<< HEAD
+*.pyc
 *.py[cod]
 .pytest_cache/
-simulations/*/sim.vvp
-simulations/*/wave.vcd
-=======
-*.pyc
 simulations/
 *.vcd
 *.vvp
->>>>>>> cde7631 (aomw)
